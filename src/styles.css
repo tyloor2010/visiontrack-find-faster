@@ -208,3 +208,99 @@
     display: none !important;
   }
 }
+
+/* ---------- VisionTrack motion system ---------- */
+@keyframes vt-aurora-shift {
+  0%   { transform: translate3d(-6%, -4%, 0) scale(1.1); }
+  50%  { transform: translate3d(6%, 4%, 0) scale(1.25); }
+  100% { transform: translate3d(-6%, -4%, 0) scale(1.1); }
+}
+@keyframes vt-sweep {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(220%); }
+}
+@keyframes vt-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+@keyframes vt-scanline {
+  0%   { transform: translateY(-10%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(1000%); opacity: 0; }
+}
+@keyframes vt-pulse-ring {
+  0%   { transform: scale(0.6); opacity: 0.55; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes vt-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.vt-aurora {
+  background:
+    radial-gradient(38% 42% at 22% 30%, color-mix(in oklab, var(--color-primary) 45%, transparent), transparent 70%),
+    radial-gradient(34% 40% at 78% 25%, oklch(0.62 0.19 300 / 0.38), transparent 70%),
+    radial-gradient(46% 46% at 60% 82%, oklch(0.66 0.16 195 / 0.32), transparent 72%);
+  filter: blur(28px);
+  animation: vt-aurora-shift 18s ease-in-out infinite;
+}
+
+.vt-fade-up { animation: vt-fade-up 900ms 400ms ease-out both; }
+.vt-float { animation: vt-float 7s ease-in-out infinite; }
+
+.vt-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 750ms cubic-bezier(0.16, 1, 0.3, 1), transform 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.vt-reveal-in { opacity: 1; transform: none; }
+
+@utility vt-sweep-line {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.vt-shimmer-text {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-primary) 0%,
+    oklch(0.85 0.12 200) 35%,
+    oklch(0.75 0.18 300) 60%,
+    var(--color-primary) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: vt-sweep-text 6s linear infinite;
+}
+@keyframes vt-sweep-text {
+  0%   { background-position: 0% 0; }
+  100% { background-position: 220% 0; }
+}
+
+.vt-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-primary) 80%, transparent), transparent);
+  animation: vt-scanline 5.5s linear infinite;
+}
+
+.vt-ping {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--color-primary) 70%, transparent);
+  animation: vt-pulse-ring 3.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt-aurora, .vt-float, .vt-scan, .vt-ping, .vt-shimmer-text, .vt-fade-up { animation: none !important; }
+  .vt-reveal { opacity: 1; transform: none; transition: none; }
+}
