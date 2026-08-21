@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Boxes, Compass, Layers, ScanSearch, ShieldCheck } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductPreview } from "@/components/site/ProductPreview";
+import { CinematicIntro } from "@/components/site/CinematicIntro";
+import { Reveal } from "@/components/site/Reveal";
 import { Button } from "@/components/ui/button";
 
 const title = "VisionTrack — See Further. Find Faster.";
