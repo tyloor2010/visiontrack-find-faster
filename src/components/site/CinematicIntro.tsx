@@ -116,6 +116,7 @@ export function CinematicIntro() {
         ctx.globalCompositeOperation = "source-over";
       }
 
+      (window as any).__vt = { t, frames: (((window as any).__vt?.frames) ?? 0) + 1, n: particles.length, p0: { x: particles[0]?.x, y: particles[0]?.y, tx: particles[0]?.tx, ty: particles[0]?.ty } };
       if (t < 3200) raf = requestAnimationFrame(draw);
     };
     raf = requestAnimationFrame(draw);
