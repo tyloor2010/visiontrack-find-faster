@@ -1,5 +1,4 @@
-import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -41,11 +40,6 @@ export const Route = createFileRoute("/app")({
 
 function WorkspaceLayout() {
   const { user, ready } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (ready && !user) navigate({ to: "/signin", replace: true });
-  }, [ready, user, navigate]);
 
   if (!ready || !user) {
     return (

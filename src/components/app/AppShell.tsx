@@ -210,15 +210,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <LifeBuoy className="mr-2 h-4 w-4" /> Privacy & Safety
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onSelect={() => {
-                    signOut();
-                    navigate({ to: "/signin" });
-                  }}
-                >
-                  <LogOut className="mr-2 h-4 w-4" /> Sign out
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

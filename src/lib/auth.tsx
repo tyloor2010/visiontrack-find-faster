@@ -37,7 +37,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setUser(JSON.parse(raw) as SessionUser);
+      if (raw) {
+        setUser(JSON.parse(raw) as SessionUser);
+      } else {
+        const fallback: SessionUser = {
+          name: "Nadia Farouk",
+          email: "nadia.farouk@coastalresponse.org",
+          role: "Administrator",
+          organization: "Coastal Response Unit",
+          signedInAt: new Date().toISOString(),
+        };
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback));
+        setUser(fallback);
+      }
     } catch {
       /* ignore malformed session */
     }
