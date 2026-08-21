@@ -177,12 +177,12 @@ function Home() {
               ["02", "Upload evidence", "Photos, video frames, documents, locations and notes — each item versioned and attributed."],
               ["03", "Visual search", "Ranked visual similarities across authorized evidence with explicit confidence scores."],
               ["04", "Review & coordinate", "Reviewers compare, decide, and assign field follow-up. Every action is logged."],
-            ].map(([n, t, b]) => (
-              <li key={n} className="bg-card p-6">
+            ].map(([n, t, b], i) => (
+              <Reveal key={n} as="li" delay={i * 120} className="bg-card p-6">
                 <span className="font-mono text-xs text-primary">{n}</span>
                 <h3 className="mt-3 font-semibold">{t}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{b}</p>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>
