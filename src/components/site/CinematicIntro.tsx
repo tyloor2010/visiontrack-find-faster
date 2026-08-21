@@ -5,8 +5,6 @@ type Particle = {
   y: number;
   tx: number;
   ty: number;
-  vx: number;
-  vy: number;
   r: number;
   hue: number;
 };
@@ -54,7 +52,7 @@ export function CinematicIntro() {
     off.width = w;
     off.height = h;
     const octx = off.getContext("2d")!;
-    const fontSize = Math.min(w / (WORD.length * 0.62), h * 0.2);
+    const fontSize = Math.min(w / (WORD.length * 0.78), h * 0.18);
     octx.fillStyle = "#fff";
     octx.textAlign = "center";
     octx.textBaseline = "middle";
@@ -79,8 +77,6 @@ export function CinematicIntro() {
         y: h / 2 + Math.sin(a) * d,
         tx: t.x,
         ty: t.y,
-        vx: 0,
-        vy: 0,
         r: gap * (0.32 + Math.random() * 0.28),
         hue: 190 + Math.random() * 90,
       };
@@ -96,12 +92,9 @@ export function CinematicIntro() {
       for (const p of particles) {
         const dx = p.tx - p.x;
         const dy = p.ty - p.y;
-        const ease = 0.045 + settle * 0.07;
-        p.vx = (p.vx + dx * ease) * 0.78;
-        p.vy = (p.vy + dy * ease) * 0.78;
-        const jitter = (1 - settle) * 1.6;
-        p.x += p.vx + (Math.random() - 0.5) * jitter;
-        p.y += p.vy + (Math.random() - 0.5) * jitter;
+        const ease = 0.05 + settle * 0.09;
+        p.x += dx * ease + (Math.random() - 0.5) * (1 - settle) * 2.2;
+        p.y += dy * ease + (Math.random() - 0.5) * (1 - settle) * 2.2;
 
         ctx.beginPath();
         ctx.fillStyle = `hsla(${p.hue}, 90%, ${58 + settle * 18}%, ${0.35 + settle * 0.6})`;
