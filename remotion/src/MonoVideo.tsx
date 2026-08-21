@@ -162,6 +162,7 @@ const M6: React.FC = () => {
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
         <div style={{ width: 260, height: 260, borderRadius: 999, border: `3px solid ${BLACK}`, opacity: pulse, transform: `scale(${0.7 + pulse * 0.5})` }} />
       </AbsoluteFill>
+      <AbsoluteFill style={{ background: "linear-gradient(180deg, transparent 42%, rgba(247,247,247,0.72) 66%, rgba(247,247,247,0.98) 84%)" }} />
       <AbsoluteFill style={{ padding: "70px 130px", justifyContent: "flex-end" }}>
         <Punch text="Every [location]" size={96} dark={false} delay={6} />
         <div style={{ height: 22 }} />
