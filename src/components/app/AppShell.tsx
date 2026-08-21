@@ -72,7 +72,7 @@ function SidebarLink({
   to: string;
   label: string;
   icon: typeof Bell;
-  badge?: number;
+  badge?: number | undefined;
 }) {
   return (
     <Link
