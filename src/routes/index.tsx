@@ -143,12 +143,15 @@ function Home() {
             Three capabilities, built around one review discipline.
           </h2>
           <div className="mt-10 grid gap-px border border-border bg-border md:grid-cols-3">
-            {capabilities.map((c) => (
-              <article key={c.name} className="bg-card p-7">
-                <c.icon className="h-5 w-5 text-primary" aria-hidden="true" />
-                <h3 className="mt-5 text-lg font-semibold">{c.name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
-              </article>
+            {capabilities.map((c, i) => (
+              <Reveal key={c.name} delay={i * 130}>
+                <article className="group relative h-full overflow-hidden bg-card p-7 transition-colors duration-300 hover:bg-surface">
+                  <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <c.icon className="h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+                  <h3 className="mt-5 text-lg font-semibold">{c.name}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
