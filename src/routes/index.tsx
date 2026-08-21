@@ -235,7 +235,7 @@ function Home() {
           </div>
           <div className="flex gap-3">
             <Button asChild size="lg">
-              <Link to="/signup">Create Account</Link>
+              <Link to="/app/cases/new">Start a Case</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
               <Link to="/app">View the workspace</Link>

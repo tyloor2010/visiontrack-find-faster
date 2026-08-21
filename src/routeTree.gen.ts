@@ -18,8 +18,6 @@ import { Route as ForFamiliesRouteImport } from './routes/for-families'
 import { Route as ForOrganizationsRouteImport } from './routes/for-organizations'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as SigninRouteImport } from './routes/signin'
-import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TechnologyRouteImport } from './routes/technology'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AppIndexRouteImport } from './routes/app.index'
@@ -78,16 +76,6 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SigninRoute = SigninRouteImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TechnologyRoute = TechnologyRouteImport.update({
@@ -171,8 +159,6 @@ export interface FileRoutesByFullPath {
   '/for-organizations': typeof ForOrganizationsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
   '/app/alerts': typeof AppAlertsRoute
@@ -197,8 +183,6 @@ export interface FileRoutesByTo {
   '/for-organizations': typeof ForOrganizationsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
   '/app/alerts': typeof AppAlertsRoute
@@ -225,8 +209,6 @@ export interface FileRoutesById {
   '/for-organizations': typeof ForOrganizationsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
   '/app/alerts': typeof AppAlertsRoute
@@ -254,8 +236,6 @@ export interface FileRouteTypes {
     | '/for-organizations'
     | '/how-it-works'
     | '/privacy'
-    | '/signin'
-    | '/signup'
     | '/technology'
     | '/terms'
     | '/app/alerts'
@@ -280,8 +260,6 @@ export interface FileRouteTypes {
     | '/for-organizations'
     | '/how-it-works'
     | '/privacy'
-    | '/signin'
-    | '/signup'
     | '/technology'
     | '/terms'
     | '/app/alerts'
@@ -307,8 +285,6 @@ export interface FileRouteTypes {
     | '/for-organizations'
     | '/how-it-works'
     | '/privacy'
-    | '/signin'
-    | '/signup'
     | '/technology'
     | '/terms'
     | '/app/alerts'
@@ -335,8 +311,6 @@ export interface RootRouteChildren {
   ForOrganizationsRoute: typeof ForOrganizationsRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PrivacyRoute: typeof PrivacyRoute
-  SigninRoute: typeof SigninRoute
-  SignupRoute: typeof SignupRoute
   TechnologyRoute: typeof TechnologyRoute
   TermsRoute: typeof TermsRoute
 }
@@ -404,20 +378,6 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/technology': {
@@ -563,8 +523,6 @@ const rootRouteChildren: RootRouteChildren = {
   ForOrganizationsRoute: ForOrganizationsRoute,
   HowItWorksRoute: HowItWorksRoute,
   PrivacyRoute: PrivacyRoute,
-  SigninRoute: SigninRoute,
-  SignupRoute: SignupRoute,
   TechnologyRoute: TechnologyRoute,
   TermsRoute: TermsRoute,
 }

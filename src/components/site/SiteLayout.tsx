@@ -36,7 +36,7 @@ export function SiteHeader() {
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
           <Button asChild variant="ghost" size="sm">
-            <Link to="/signin">Sign in</Link>
+            <Link to="/app">Workspace</Link>
           </Button>
           <Button asChild size="sm">
             <Link to="/app/cases/new">Start a Case</Link>
@@ -62,7 +62,7 @@ export function SiteHeader() {
             ))}
             <div className="mt-3 flex gap-2 pb-3">
               <Button asChild variant="outline" size="sm" className="flex-1">
-                <Link to="/signin">Sign in</Link>
+                <Link to="/app">Workspace</Link>
               </Button>
               <Button asChild size="sm" className="flex-1">
                 <Link to="/app/cases/new">Start a Case</Link>

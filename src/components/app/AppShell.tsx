@@ -5,7 +5,6 @@ import {
   FolderOpen,
   LayoutDashboard,
   LifeBuoy,
-  LogOut,
   Map,
   ScanSearch,
   Search,
@@ -91,7 +90,7 @@ function SidebarLink({
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -209,15 +208,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <Link to="/privacy">
                     <LifeBuoy className="mr-2 h-4 w-4" /> Privacy & Safety
                   </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onSelect={() => {
-                    signOut();
-                    navigate({ to: "/signin" });
-                  }}
-                >
-                  <LogOut className="mr-2 h-4 w-4" /> Sign out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
