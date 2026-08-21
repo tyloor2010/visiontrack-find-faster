@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from "react";
 type Particle = {
   x: number;
   y: number;
+  sx: number;
+  sy: number;
+  delay: number;
   tx: number;
   ty: number;
   r: number;
@@ -75,6 +78,9 @@ export function CinematicIntro() {
       return {
         x: w / 2 + Math.cos(a) * d,
         y: h / 2 + Math.sin(a) * d,
+        sx: w / 2 + Math.cos(a) * d,
+        sy: h / 2 + Math.sin(a) * d,
+        delay: Math.random() * 420,
         tx: t.x,
         ty: t.y,
         r: gap * (0.32 + Math.random() * 0.28),
@@ -90,11 +96,11 @@ export function CinematicIntro() {
       const settle = Math.min(1, t / 1400);
 
       for (const p of particles) {
-        const dx = p.tx - p.x;
-        const dy = p.ty - p.y;
-        const ease = 0.05 + settle * 0.09;
-        p.x += dx * ease + (Math.random() - 0.5) * (1 - settle) * 2.2;
-        p.y += dy * ease + (Math.random() - 0.5) * (1 - settle) * 2.2;
+        const local = Math.min(1, Math.max(0, (t - p.delay) / 1500));
+        const e = 1 - Math.pow(1 - local, 3);
+        const wobble = (1 - e) * 26;
+        p.x = p.sx + (p.tx - p.sx) * e + (Math.random() - 0.5) * wobble;
+        p.y = p.sy + (p.ty - p.sy) * e + (Math.random() - 0.5) * wobble;
 
         ctx.beginPath();
         ctx.fillStyle = `hsla(${p.hue}, 90%, ${58 + settle * 18}%, ${0.35 + settle * 0.6})`;
@@ -103,8 +109,8 @@ export function CinematicIntro() {
       }
 
       // Scan sweep across the assembled wordmark.
-      if (t > 1500) {
-        const sweep = ((t - 1500) / 900) % 1;
+      if (t > 2100) {
+        const sweep = ((t - 2100) / 900) % 1;
         const gx = sweep * w;
         const g = ctx.createLinearGradient(gx - 160, 0, gx + 160, 0);
         g.addColorStop(0, "rgba(255,255,255,0)");
@@ -116,13 +122,12 @@ export function CinematicIntro() {
         ctx.globalCompositeOperation = "source-over";
       }
 
-      (window as any).__vt = { t, frames: (((window as any).__vt?.frames) ?? 0) + 1, n: particles.length, p0: { x: particles[0]?.x, y: particles[0]?.y, tx: particles[0]?.tx, ty: particles[0]?.ty } };
-      if (t < 3200) raf = requestAnimationFrame(draw);
+      if (t < 4200) raf = requestAnimationFrame(draw);
     };
     raf = requestAnimationFrame(draw);
 
-    const leave = window.setTimeout(() => setPhase("leaving"), 2900);
-    const finish = window.setTimeout(() => setPhase("done"), 3800);
+    const leave = window.setTimeout(() => setPhase("leaving"), 3600);
+    const finish = window.setTimeout(() => setPhase("done"), 4600);
 
     const onResize = () => {
       w = window.innerWidth;
