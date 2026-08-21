@@ -377,6 +377,285 @@ export const evidenceUploads = [
   { week: "W34", images: 52, videos: 11, documents: 18 },
 ];
 
+
+/* ------------------------------------------------------------------
+ * Extended sample dataset
+ * Deterministic generated fictional records so every screen (cases,
+ * evidence, matches, alerts, team, audit log) shows realistic volume.
+ * ------------------------------------------------------------------ */
+
+function mulberry32(seed: number) {
+  let a = seed;
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const rnd = mulberry32(20260821);
+const pick = <T,>(arr: readonly T[]): T => arr[Math.floor(rnd() * arr.length)]!;
+const between = (min: number, max: number) => min + Math.floor(rnd() * (max - min + 1));
+const isoAgo = (days: number, hour = 9, min = 0) => {
+  const d = new Date(Date.UTC(2026, 7, 21, hour, min, 0));
+  d.setUTCDate(d.getUTCDate() - days);
+  return d.toISOString();
+};
+const pad = (n: number) => String(n).padStart(2, "0");
+const stamp = (iso: string) => {
+  const d = new Date(iso);
+  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+};
+
+const FIRST_F = ["Nadia", "Mona", "Salma", "Hoda", "Rania", "Aya", "Yara", "Ingy", "Nourhan", "Farida", "Reem", "Dina", "Malak", "Habiba", "Amira", "Shaimaa"];
+const FIRST_M = ["Omar", "Hassan", "Mostafa", "Kareem", "Ziad", "Adham", "Fady", "Sherif", "Bassem", "Marwan", "Hisham", "Amr", "Seif", "Tamer", "Wael", "Islam"];
+const LAST = ["Abdelrahman", "El Sayed", "Kamal", "Zaki", "Ibrahim", "Shawky", "Hegazy", "Ramadan", "Sobhy", "Gaber", "Lotfy", "Mansour", "Rifaat", "Sultan", "Awad", "Nassar"];
+const LOCATIONS = [
+  "Maadi, Cairo", "Heliopolis, Cairo", "Downtown, Cairo", "Giza Square, Giza", "6th of October City",
+  "Smouha, Alexandria", "Miami, Alexandria", "Mansoura City Centre", "Zagazig Market District",
+  "Ismailia Ferry Terminal", "Suez Port Road", "Damietta Corniche", "Aswan Riverside",
+  "Luxor East Bank", "Hurghada Marina", "Fayoum Lakeside", "Minya Central Station", "Beni Suef Bus Depot",
+];
+const TEAMS = ["Coastal Response Unit", "Metro Search Team", "Delta Coordination", "Upper Nile Task Force", "Canal Zone Volunteers", "Desert Road Patrol"];
+const PEOPLE = ["Ahmed Selim", "Dalia Moussa", "Mariam Khaled", "Omar Nabil", "Hana Roushdy", "Nour Adel", "Sherif Ezzat", "Laila Sabry"];
+const HAIR = ["Black, short", "Dark brown, shoulder length", "Grey, thinning", "Black, curly", "Light brown, tied back", "Black, braided"];
+const CLOTHES = ["Grey hoodie and jeans", "Beige coat, dark trousers", "White shirt, navy trousers", "Black tracksuit", "Blue work uniform", "Denim jacket, black skirt", "Green polo shirt, khaki trousers"];
+const FEATURES = ["Small scar above left eyebrow", "Wears prescription glasses", "Birthmark on right forearm", "Walks with a slight limp", "Tattoo on left wrist", "Hearing aid in right ear", "No distinguishing features recorded"];
+const ACCESSORIES = ["Black backpack", "Brown leather bag", "Canvas tote bag", "Sports duffel bag", "No items recorded", "Small crossbody purse"];
+const CIRCUMSTANCES = [
+  "Did not return home after an evening errand; phone unreachable since.",
+  "Left a workplace shift early and did not arrive at the expected address.",
+  "Separated from a family group during a crowded public event.",
+  "Reported missing after two consecutive missed medical appointments.",
+  "Last contact was a short call from a public transport hub.",
+  "Did not board a scheduled intercity service after checking in.",
+];
+const STATUSES: CaseStatus[] = ["Active", "Under Review", "Potential Match", "Resolved", "Archived"];
+const PRIORITIES: CasePriority[] = ["Low", "Medium", "High", "Critical"];
+const EV_TITLES: Record<EvidenceType, string[]> = {
+  Image: ["Reference portrait — family supplied", "Street camera still frame", "Transit hall frame", "Volunteer phone photo", "Shopfront frame capture", "Clothing detail close-up"],
+  Video: ["Authorized venue clip", "Terminal concourse clip", "Parking area clip", "Community camera segment"],
+  Document: ["Family statement transcript", "Ticket record extract", "Employer attendance record", "Medical note (redacted)", "Volunteer canvass log"],
+  Location: ["Last confirmed network ping", "Reported sighting coordinates", "Search grid checkpoint", "Vehicle route waypoint"],
+  Note: ["Neighbour interview summary", "Reviewer observation", "Coordinator field note", "Hotline tip summary"],
+};
+const EV_STATUS: EvidenceItem["status"][] = ["Verified", "Pending Review", "Flagged"];
+const MATCH_SOURCES = ["Authorized street camera", "Transit operator footage", "Community submission", "Volunteer field photo", "Partner agency archive", "Venue security footage"];
+const MATCH_STATUS: PotentialMatch["status"][] = ["Awaiting Review", "In Review", "Saved Lead", "Dismissed"];
+const ACTIONS = ["Case created", "Reference images uploaded", "Evidence added", "Visual search initiated", "Potential match detected", "Reviewer assigned", "Lead reviewed", "Search area expanded", "Case status updated", "Report generated"];
+
+let evSeq = 4900;
+let mtSeq = 7300;
+let tlSeq = 500;
+let alSeq = 600;
+let lgSeq = 9100;
+
+for (let i = 0; i < 42; i += 1) {
+  const id = `VT-${1100 + i * 3}`;
+  const female = rnd() > 0.5;
+  const fullName = `${female ? pick(FIRST_F) : pick(FIRST_M)} ${pick(LAST)}`;
+  const status = pick(STATUSES);
+  const priority = pick(PRIORITIES);
+  const daysAgo = between(1, 120);
+  const lastSeenAt = isoAgo(daysAgo, between(6, 22), pick([0, 10, 15, 20, 30, 45]));
+  const createdAt = isoAgo(daysAgo - (daysAgo > 1 ? 1 : 0), between(6, 20), 0);
+  const updatedAt = isoAgo(between(0, Math.max(0, daysAgo - 1)), between(8, 19), 0);
+  const location = pick(LOCATIONS);
+  const teamName = pick(TEAMS);
+  const assignees = [pick(PEOPLE), pick(PEOPLE)].filter((v, idx, arr) => arr.indexOf(v) === idx);
+  const coordinates = { x: between(12, 88), y: between(12, 86) };
+  const refImages = between(1, 6);
+
+  cases.push({
+    id,
+    person: {
+      fullName,
+      age: between(9, 78),
+      gender: female ? "Female" : "Male",
+      height: `${between(148, 192)} cm`,
+      hair: pick(HAIR),
+      clothing: pick(CLOTHES),
+      distinguishingFeatures: pick(FEATURES),
+      accessories: pick(ACCESSORIES),
+    },
+    lastSeenLocation: location,
+    lastSeenAt,
+    status,
+    priority,
+    assignedTeam: teamName,
+    assignees,
+    createdAt,
+    updatedAt,
+    circumstances: pick(CIRCUMSTANCES),
+    notes: pick([
+      "Authorized footage request submitted; awaiting operator response.",
+      "Family liaison contacted daily; no new information reported.",
+      "Two potential matches dismissed after reviewer comparison.",
+      "Search area extended after a reviewed community submission.",
+      "Case under periodic review; no active leads at this time.",
+    ]),
+    emergencyContact: {
+      name: `${female ? pick(FIRST_M) : pick(FIRST_F)} ${pick(LAST)}`,
+      relation: pick(["Sister", "Brother", "Father", "Mother", "Spouse", "Cousin", "Daughter", "Son"]),
+      phone: `+20 1${between(0, 2)}${between(0, 9)} ${between(100, 999)} ${between(1000, 9999)}`,
+    },
+    coordinates,
+    searchRadiusKm: between(2, 18),
+    referenceImages: refImages,
+  });
+
+  // Evidence
+  const evCount = between(2, 7);
+  for (let e = 0; e < evCount; e += 1) {
+    const type = pick(["Image", "Image", "Image", "Video", "Document", "Location", "Note"] as EvidenceType[]);
+    const at = isoAgo(Math.max(0, daysAgo - between(0, 4)), between(7, 21), between(0, 59));
+    evSeq += 1;
+    evidence.push({
+      id: `EV-${evSeq}`,
+      caseId: id,
+      type,
+      title: pick(EV_TITLES[type]),
+      uploadedBy: pick(PEOPLE),
+      uploadedAt: at,
+      location: type === "Location" ? `${(24 + rnd() * 7).toFixed(2)} N, ${(29 + rnd() * 5).toFixed(2)} E` : location,
+      status: pick(EV_STATUS),
+      sizeLabel:
+        type === "Video"
+          ? `${between(40, 320)} MB`
+          : type === "Image"
+            ? `${(0.4 + rnd() * 4).toFixed(1)} MB`
+            : type === "Document"
+              ? `${between(24, 780)} KB`
+              : "—",
+    });
+  }
+
+  // Potential matches
+  const mtCount = status === "Resolved" || status === "Archived" ? between(0, 2) : between(1, 5);
+  for (let m = 0; m < mtCount; m += 1) {
+    mtSeq += 1;
+    const at = isoAgo(Math.max(0, daysAgo - between(0, 6)), between(6, 23), between(0, 59));
+    matches.push({
+      id: `PM-${mtSeq}`,
+      caseId: id,
+      rank: m + 1,
+      similarity: Math.max(41, 94 - m * between(3, 9) - between(0, 4)),
+      source: pick(MATCH_SOURCES),
+      location: pick(LOCATIONS),
+      timestamp: stamp(at),
+      distanceKm: Number((rnd() * 15 + 0.3).toFixed(1)),
+      status: pick(MATCH_STATUS),
+      reviewer: pick(PEOPLE),
+      coordinates: {
+        x: Math.min(94, Math.max(6, coordinates.x + between(-14, 14))),
+        y: Math.min(92, Math.max(6, coordinates.y + between(-12, 12))),
+      },
+    });
+  }
+
+  // Timeline
+  const tlCount = between(4, 8);
+  for (let t = 0; t < tlCount; t += 1) {
+    tlSeq += 1;
+    const at = new Date(isoAgo(Math.max(0, daysAgo - t), between(6, 21), between(0, 59)));
+    timeline.push({
+      id: `TL-${tlSeq}`,
+      caseId: id,
+      date: `${at.getUTCFullYear()}-${pad(at.getUTCMonth() + 1)}-${pad(at.getUTCDate())}`,
+      time: `${pad(at.getUTCHours())}:${pad(at.getUTCMinutes())}`,
+      user: pick([...PEOPLE, "System"]),
+      action: t === 0 ? "Case created" : pick(ACTIONS),
+      detail: pick([
+        `Recorded against ${id} by the assigned team.`,
+        "Authorized evidence attached and queued for review.",
+        "Candidate list refreshed after new evidence was added.",
+        "Human reviewer recorded a decision on a candidate.",
+        "Search parameters adjusted following coordinator input.",
+      ]),
+    });
+  }
+
+  // Alerts (subset of cases)
+  if (i % 3 === 0) {
+    alSeq += 1;
+    const urgent = priority === "Critical" || priority === "High";
+    alerts.push({
+      id: `AL-${alSeq}`,
+      category: pick(["Cases", "Evidence", "Team"] as AlertItem["category"][]),
+      urgent,
+      title: pick([
+        `New potential match on ${id}`,
+        `Evidence pending review on ${id}`,
+        `Case ${id} priority changed to ${priority}`,
+        `Reviewer assigned to ${id}`,
+        `Search job completed for ${id}`,
+      ]),
+      detail: pick([
+        "A human reviewer must confirm or dismiss this item. Similarity scores are not identifications.",
+        "Uploaded through an authorized account and awaiting verification.",
+        "Recorded automatically in the case audit log.",
+        "Open the case to review the full context before acting.",
+      ]),
+      caseId: id,
+      at: updatedAt,
+      read: rnd() > 0.55,
+    });
+  }
+
+  // Audit entries
+  for (let l = 0; l < 2; l += 1) {
+    lgSeq += 1;
+    auditLog.push({
+      id: `LOG-${lgSeq}`,
+      timestamp: stamp(isoAgo(Math.max(0, daysAgo - l), between(6, 21), between(0, 59))),
+      user: pick(PEOPLE),
+      action: pick(["Created case", "Uploaded evidence", "Viewed evidence", "Ran visual search", "Reviewed match", "Flagged evidence", "Generated report", "Updated case status"]),
+      caseId: id,
+      object: pick([id, `EV-${evSeq}`, `PM-${mtSeq}`]),
+      metadata: `${pick(["web", "mobile", "admin console"])} · 10.4.${between(1, 30)}.${between(2, 240)}`,
+    });
+  }
+
+  // Search jobs
+  if (i % 2 === 0) {
+    searchJobs.push({
+      id: `SJ-${2300 + i}`,
+      caseId: id,
+      startedBy: pick(PEOPLE),
+      startedAt: stamp(isoAgo(Math.max(0, daysAgo - 2), between(7, 20), between(0, 59))),
+      scope: pick(["Authorized evidence · 4 km", "Authorized evidence · 8 km", "Case evidence only", "Authorized evidence · 15 km"]),
+      candidates: between(180, 3200),
+      results: between(0, 8),
+      state: pick(["Complete", "Complete", "Complete", "Processing"]),
+    });
+  }
+}
+
+// Extra team members so the roster looks like a real organization.
+const EXTRA_TEAM_ROLES: TeamRole[] = ["Investigator", "Reviewer", "Coordinator", "Viewer", "Investigator", "Reviewer"];
+for (let i = 0; i < 18; i += 1) {
+  const female = rnd() > 0.5;
+  const name = `${female ? pick(FIRST_F) : pick(FIRST_M)} ${pick(LAST)}`;
+  team.push({
+    id: `U-${100 + i}`,
+    name,
+    email: `${name.toLowerCase().replace(/[^a-z]+/g, ".")}@visiontrack.example`,
+    role: pick(EXTRA_TEAM_ROLES),
+    status: pick(["Active", "Active", "Active", "Invited", "Suspended"] as TeamMember["status"][]),
+    assignedCases: between(0, 14),
+    lastActive: pick(["2 min ago", "18 min ago", "1 h ago", "3 h ago", "Yesterday", "2 days ago", "Last week"]),
+  });
+}
+
+// Newest first everywhere it matters.
+cases.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+evidence.sort((a, b) => b.uploadedAt.localeCompare(a.uploadedAt));
+alerts.sort((a, b) => b.at.localeCompare(a.at));
+auditLog.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+matches.sort((a, b) => b.similarity - a.similarity);
+
 export function getCase(id: string) {
   return cases.find((c) => c.id === id);
 }
