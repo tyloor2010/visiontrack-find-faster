@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ForFamiliesRouteImport } from './routes/for-families'
 import { Route as ForOrganizationsRouteImport } from './routes/for-organizations'
@@ -20,6 +22,18 @@ import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TechnologyRouteImport } from './routes/technology'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAlertsRouteImport } from './routes/app.alerts'
+import { Route as AppEvidenceRouteImport } from './routes/app.evidence'
+import { Route as AppMapRouteImport } from './routes/app.map'
+import { Route as AppProfileRouteImport } from './routes/app.profile'
+import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppSearchRouteImport } from './routes/app.search'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppCasesIndexRouteImport } from './routes/app.cases.index'
+import { Route as AppCasesCaseIdRouteImport } from './routes/app.cases.$caseId'
+import { Route as AppCasesNewRouteImport } from './routes/app.cases.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +43,16 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -76,10 +100,72 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAlertsRoute = AppAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEvidenceRoute = AppEvidenceRouteImport.update({
+  id: '/evidence',
+  path: '/evidence',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMapRoute = AppMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSearchRoute = AppSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCasesIndexRoute = AppCasesIndexRouteImport.update({
+  id: '/cases/',
+  path: '/cases/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCasesCaseIdRoute = AppCasesCaseIdRouteImport.update({
+  id: '/cases/$caseId',
+  path: '/cases/$caseId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCasesNewRoute = AppCasesNewRouteImport.update({
+  id: '/cases/new',
+  path: '/cases/new',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/app': typeof AppRouteWithChildren
   '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
@@ -89,10 +175,23 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
+  '/app/alerts': typeof AppAlertsRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/map': typeof AppMapRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/': typeof AppIndexRoute
+  '/app/cases/$caseId': typeof AppCasesCaseIdRoute
+  '/app/cases/new': typeof AppCasesNewRoute
+  '/app/cases/': typeof AppCasesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
@@ -102,11 +201,25 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
+  '/app/alerts': typeof AppAlertsRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/map': typeof AppMapRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app': typeof AppIndexRoute
+  '/app/cases/$caseId': typeof AppCasesCaseIdRoute
+  '/app/cases/new': typeof AppCasesNewRoute
+  '/app/cases': typeof AppCasesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/app': typeof AppRouteWithChildren
   '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
@@ -116,12 +229,26 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
+  '/app/alerts': typeof AppAlertsRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/map': typeof AppMapRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/': typeof AppIndexRoute
+  '/app/cases/$caseId': typeof AppCasesCaseIdRoute
+  '/app/cases/new': typeof AppCasesNewRoute
+  '/app/cases/': typeof AppCasesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
+    | '/app'
     | '/contact'
     | '/for-families'
     | '/for-organizations'
@@ -131,10 +258,23 @@ export interface FileRouteTypes {
     | '/signup'
     | '/technology'
     | '/terms'
+    | '/app/alerts'
+    | '/app/evidence'
+    | '/app/map'
+    | '/app/profile'
+    | '/app/reports'
+    | '/app/search'
+    | '/app/settings'
+    | '/app/team'
+    | '/app/'
+    | '/app/cases/$caseId'
+    | '/app/cases/new'
+    | '/app/cases/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
     | '/for-families'
     | '/for-organizations'
@@ -144,10 +284,24 @@ export interface FileRouteTypes {
     | '/signup'
     | '/technology'
     | '/terms'
+    | '/app/alerts'
+    | '/app/evidence'
+    | '/app/map'
+    | '/app/profile'
+    | '/app/reports'
+    | '/app/search'
+    | '/app/settings'
+    | '/app/team'
+    | '/app'
+    | '/app/cases/$caseId'
+    | '/app/cases/new'
+    | '/app/cases'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
+    | '/app'
     | '/contact'
     | '/for-families'
     | '/for-organizations'
@@ -157,11 +311,25 @@ export interface FileRouteTypes {
     | '/signup'
     | '/technology'
     | '/terms'
+    | '/app/alerts'
+    | '/app/evidence'
+    | '/app/map'
+    | '/app/profile'
+    | '/app/reports'
+    | '/app/search'
+    | '/app/settings'
+    | '/app/team'
+    | '/app/'
+    | '/app/cases/$caseId'
+    | '/app/cases/new'
+    | '/app/cases/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
+  AppRoute: typeof AppRouteWithChildren
   ContactRoute: typeof ContactRoute
   ForFamiliesRoute: typeof ForFamiliesRoute
   ForOrganizationsRoute: typeof ForOrganizationsRoute
@@ -187,6 +355,20 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -252,12 +434,130 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/alerts': {
+      id: '/app/alerts'
+      path: '/alerts'
+      fullPath: '/app/alerts'
+      preLoaderRoute: typeof AppAlertsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/evidence': {
+      id: '/app/evidence'
+      path: '/evidence'
+      fullPath: '/app/evidence'
+      preLoaderRoute: typeof AppEvidenceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/map': {
+      id: '/app/map'
+      path: '/map'
+      fullPath: '/app/map'
+      preLoaderRoute: typeof AppMapRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reports': {
+      id: '/app/reports'
+      path: '/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/search': {
+      id: '/app/search'
+      path: '/search'
+      fullPath: '/app/search'
+      preLoaderRoute: typeof AppSearchRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cases/': {
+      id: '/app/cases/'
+      path: '/cases'
+      fullPath: '/app/cases/'
+      preLoaderRoute: typeof AppCasesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cases/$caseId': {
+      id: '/app/cases/$caseId'
+      path: '/cases/$caseId'
+      fullPath: '/app/cases/$caseId'
+      preLoaderRoute: typeof AppCasesCaseIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cases/new': {
+      id: '/app/cases/new'
+      path: '/cases/new'
+      fullPath: '/app/cases/new'
+      preLoaderRoute: typeof AppCasesNewRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
+
+interface AppRouteChildren {
+  AppAlertsRoute: typeof AppAlertsRoute
+  AppEvidenceRoute: typeof AppEvidenceRoute
+  AppMapRoute: typeof AppMapRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppSearchRoute: typeof AppSearchRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppCasesCaseIdRoute: typeof AppCasesCaseIdRoute
+  AppCasesNewRoute: typeof AppCasesNewRoute
+  AppCasesIndexRoute: typeof AppCasesIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAlertsRoute: AppAlertsRoute,
+  AppEvidenceRoute: AppEvidenceRoute,
+  AppMapRoute: AppMapRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppSearchRoute: AppSearchRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppCasesCaseIdRoute: AppCasesCaseIdRoute,
+  AppCasesNewRoute: AppCasesNewRoute,
+  AppCasesIndexRoute: AppCasesIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
+  AppRoute: AppRouteWithChildren,
   ContactRoute: ContactRoute,
   ForFamiliesRoute: ForFamiliesRoute,
   ForOrganizationsRoute: ForOrganizationsRoute,

@@ -51,13 +51,13 @@ function SignUp() {
     const accepted = data.get("terms") === "on";
 
     const next: Record<string, string> = {};
-    if (name.length < 2) next.name = "Enter your full name.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) next.email = "Enter a valid work email address.";
-    if (organization.length < 2) next.organization = "Enter your organization.";
-    if (password.length < 8) next.password = "Use at least 8 characters.";
-    else if (!/[0-9]/.test(password) || !/[a-zA-Z]/.test(password)) next.password = "Include letters and numbers.";
-    if (confirm !== password) next.confirm = "Passwords do not match.";
-    if (!accepted) next.terms = "You must accept the terms and privacy policy.";
+    if (name.length < 2) next["name"] = "Enter your full name.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) next["email"] = "Enter a valid work email address.";
+    if (organization.length < 2) next["organization"] = "Enter your organization.";
+    if (password.length < 8) next["password"] = "Use at least 8 characters.";
+    else if (!/[0-9]/.test(password) || !/[a-zA-Z]/.test(password)) next["password"] = "Include letters and numbers.";
+    if (confirm !== password) next["confirm"] = "Passwords do not match.";
+    if (!accepted) next["terms"] = "You must accept the terms and privacy policy.";
     setErrors(next);
     if (Object.keys(next).length) {
       toast.error("Please correct the highlighted fields.");
@@ -91,17 +91,17 @@ function SignUp() {
             <div className="space-y-2">
               <Label htmlFor="name">Full name</Label>
               <Input id="name" name="name" autoComplete="name" {...field("name")} />
-              {errors.name ? <p id="name-err" className="text-xs text-critical">{errors.name}</p> : null}
+              {errors["name"] ? <p id="name-err" className="text-xs text-critical">{errors["name"]}</p> : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Work email</Label>
               <Input id="email" name="email" type="email" autoComplete="email" {...field("email")} />
-              {errors.email ? <p id="email-err" className="text-xs text-critical">{errors.email}</p> : null}
+              {errors["email"] ? <p id="email-err" className="text-xs text-critical">{errors["email"]}</p> : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="organization">Organization</Label>
               <Input id="organization" name="organization" defaultValue="Coastal Response Unit" {...field("organization")} />
-              {errors.organization ? <p id="organization-err" className="text-xs text-critical">{errors.organization}</p> : null}
+              {errors["organization"] ? <p id="organization-err" className="text-xs text-critical">{errors["organization"]}</p> : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">Requested role</Label>
@@ -120,12 +120,12 @@ function SignUp() {
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" name="password" type="password" autoComplete="new-password" {...field("password")} />
-                {errors.password ? <p id="password-err" className="text-xs text-critical">{errors.password}</p> : null}
+                {errors["password"] ? <p id="password-err" className="text-xs text-critical">{errors["password"]}</p> : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirm">Confirm</Label>
                 <Input id="confirm" name="confirm" type="password" autoComplete="new-password" {...field("confirm")} />
-                {errors.confirm ? <p id="confirm-err" className="text-xs text-critical">{errors.confirm}</p> : null}
+                {errors["confirm"] ? <p id="confirm-err" className="text-xs text-critical">{errors["confirm"]}</p> : null}
               </div>
             </div>
             <div className="flex items-start gap-2 pt-1">
@@ -137,7 +137,7 @@ function SignUp() {
                 use VisionTrack only for authorized missing-person cases.
               </Label>
             </div>
-            {errors.terms ? <p className="text-xs text-critical">{errors.terms}</p> : null}
+            {errors["terms"] ? <p className="text-xs text-critical">{errors["terms"]}</p> : null}
             <Button type="submit" className="w-full" size="lg" disabled={loading}>
               {loading ? "Creating account…" : "Create account"}
             </Button>
