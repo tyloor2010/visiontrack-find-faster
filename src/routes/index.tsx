@@ -43,49 +43,70 @@ const capabilities = [
 function Home() {
   return (
     <SiteLayout>
+      <CinematicIntro />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-navy text-navy-foreground">
         <div className="absolute inset-0 grid-blueprint opacity-60" aria-hidden="true" />
+        <div className="vt-aurora absolute inset-0 opacity-40" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <span className="vt-scan" style={{ animationDelay: "0s" }} />
+          <span className="vt-scan" style={{ animationDelay: "2.5s" }} />
+          <span className="vt-ping left-[12%] top-[22%] h-24 w-24" />
+          <span className="vt-ping right-[18%] bottom-[18%] h-32 w-32" style={{ animationDelay: "1.4s" }} />
+        </div>
         <div className="relative mx-auto grid max-w-7xl gap-12 px-5 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-center">
           <div>
-            <p className="eyebrow inline-flex items-center gap-2 rounded-sm border border-navy-foreground/15 px-2.5 py-1 text-navy-foreground/70">
-              <ShieldCheck className="h-3.5 w-3.5" /> Authorized missing-person searches
-            </p>
-            <h1 className="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              See Further. <span className="text-primary">Find Faster.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-foreground/70">
-              VisionTrack combines computer vision, visual intelligence, and location-based case management to help
-              authorized teams organize missing-person searches and identify potential leads faster.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link to="/app/cases/new">
-                  Start a Case <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-navy-foreground/25 bg-transparent text-navy-foreground hover:bg-navy-foreground/10 hover:text-navy-foreground">
-                <Link to="/technology">Explore the Technology</Link>
-              </Button>
-            </div>
+            <Reveal>
+              <p className="eyebrow inline-flex items-center gap-2 rounded-sm border border-navy-foreground/15 px-2.5 py-1 text-navy-foreground/70">
+                <ShieldCheck className="h-3.5 w-3.5" /> Authorized missing-person searches
+              </p>
+            </Reveal>
+            <Reveal delay={120}>
+              <h1 className="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+                See Further. <span className="vt-shimmer-text">Find Faster.</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={240}>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-foreground/70">
+                VisionTrack combines computer vision, visual intelligence, and location-based case management to help
+                authorized teams organize missing-person searches and identify potential leads faster.
+              </p>
+            </Reveal>
+            <Reveal delay={360}>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild size="lg" className="transition-transform duration-200 hover:scale-[1.03]">
+                  <Link to="/app/cases/new">
+                    Start a Case <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-navy-foreground/25 bg-transparent text-navy-foreground transition-transform duration-200 hover:scale-[1.03] hover:bg-navy-foreground/10 hover:text-navy-foreground">
+                  <Link to="/technology">Explore the Technology</Link>
+                </Button>
+              </div>
+            </Reveal>
             <dl className="mt-10 grid max-w-lg grid-cols-3 gap-px border border-navy-foreground/10 bg-navy-foreground/10">
               {[
                 ["Case workspace", "One record per case"],
                 ["Review model", "Human decision required"],
                 ["Access", "Role-based & audited"],
-              ].map(([k, v]) => (
-                <div key={k} className="bg-navy px-3 py-3">
-                  <dt className="eyebrow text-navy-foreground/45">{k}</dt>
-                  <dd className="mt-1.5 text-[13px] text-navy-foreground/85">{v}</dd>
-                </div>
+              ].map(([k, v], i) => (
+                <Reveal key={k} delay={460 + i * 90}>
+                  <div className="bg-navy px-3 py-3">
+                    <dt className="eyebrow text-navy-foreground/45">{k}</dt>
+                    <dd className="mt-1.5 text-[13px] text-navy-foreground/85">{v}</dd>
+                  </div>
+                </Reveal>
               ))}
             </dl>
           </div>
-          <div className="lg:-mr-10">
-            <ProductPreview />
-          </div>
+          <Reveal delay={200} className="lg:-mr-10">
+            <div className="vt-float">
+              <ProductPreview />
+            </div>
+          </Reveal>
         </div>
       </section>
+
 
       {/* Mission */}
       <section className="border-b border-border bg-card">
