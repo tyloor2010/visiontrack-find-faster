@@ -5,7 +5,6 @@ import {
   FolderOpen,
   LayoutDashboard,
   LifeBuoy,
-  LogOut,
   Map,
   ScanSearch,
   Search,
@@ -91,7 +90,7 @@ function SidebarLink({
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const pathname = useRouterState({ select: (s) => s.location.pathname });
