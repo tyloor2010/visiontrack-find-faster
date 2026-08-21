@@ -101,8 +101,9 @@ const M4: React.FC = () => {
         <MonoScreen src="cases.png" width={1760} dark chrome={false} crop={{ scale: sc, x: -12, y: ty }} />
       </AbsoluteFill>
       <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(10,10,10,0.85), transparent 38%, transparent 62%, rgba(10,10,10,0.9))" }} />
-      <AbsoluteFill style={{ padding: "70px 130px", justifyContent: "space-between" }}>
+      <AbsoluteFill style={{ padding: "70px 130px", justifyContent: "flex-end" }}>
         <Label text="Case management" delay={2} />
+        <div style={{ height: 22 }} />
         <Punch text="48 cases. [Zero guesswork.]" size={92} dark delay={8} maxWidth={1400} />
       </AbsoluteFill>
     </Mono>
