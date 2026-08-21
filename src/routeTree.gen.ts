@@ -11,10 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ForFamiliesRouteImport } from './routes/for-families'
 import { Route as ForOrganizationsRouteImport } from './routes/for-organizations'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SigninRouteImport } from './routes/signin'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TechnologyRouteImport } from './routes/technology'
+import { Route as TermsRouteImport } from './routes/terms'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -24,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForFamiliesRoute = ForFamiliesRouteImport.update({
@@ -41,71 +51,126 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TechnologyRoute = TechnologyRouteImport.update({
   id: '/technology',
   path: '/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/privacy': typeof PrivacyRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/privacy': typeof PrivacyRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/privacy': typeof PrivacyRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/technology': typeof TechnologyRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/contact'
     | '/for-families'
     | '/for-organizations'
     | '/how-it-works'
+    | '/privacy'
+    | '/signin'
+    | '/signup'
     | '/technology'
+    | '/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/contact'
     | '/for-families'
     | '/for-organizations'
     | '/how-it-works'
+    | '/privacy'
+    | '/signin'
+    | '/signup'
     | '/technology'
+    | '/terms'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/contact'
     | '/for-families'
     | '/for-organizations'
     | '/how-it-works'
+    | '/privacy'
+    | '/signin'
+    | '/signup'
     | '/technology'
+    | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
   ForFamiliesRoute: typeof ForFamiliesRoute
   ForOrganizationsRoute: typeof ForOrganizationsRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  PrivacyRoute: typeof PrivacyRoute
+  SigninRoute: typeof SigninRoute
+  SignupRoute: typeof SignupRoute
   TechnologyRoute: typeof TechnologyRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/for-families': {
@@ -145,11 +217,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/technology': {
       id: '/technology'
       path: '/technology'
       fullPath: '/technology'
       preLoaderRoute: typeof TechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -158,10 +258,15 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
   ForFamiliesRoute: ForFamiliesRoute,
   ForOrganizationsRoute: ForOrganizationsRoute,
   HowItWorksRoute: HowItWorksRoute,
+  PrivacyRoute: PrivacyRoute,
+  SigninRoute: SigninRoute,
+  SignupRoute: SignupRoute,
   TechnologyRoute: TechnologyRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
