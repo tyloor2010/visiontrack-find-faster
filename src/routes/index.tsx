@@ -42,7 +42,6 @@ const capabilities = [
 function Home() {
   return (
     <SiteLayout>
-      <CinematicIntro />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-navy text-navy-foreground">
         <div className="absolute inset-0 grid-blueprint opacity-60" aria-hidden="true" />
