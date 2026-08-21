@@ -211,14 +211,14 @@ function Home() {
               ["Human review required", "Every potential match must be accepted or dismissed by an authorized reviewer."],
               ["Scoped access", "Role-based permissions restrict cases, evidence and admin functions."],
               ["Full audit trail", "Uploads, searches, reviews and role changes are recorded and traceable."],
-            ].map(([t, b]) => (
-              <li key={t} className="bg-card p-6">
+            ].map(([t, b], i) => (
+              <Reveal key={t} as="li" delay={i * 110} className="bg-card p-6">
                 <div className="flex items-center gap-2">
                   <Boxes className="h-4 w-4 text-primary" aria-hidden="true" />
                   <h3 className="text-sm font-semibold">{t}</h3>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">{b}</p>
-              </li>
+              </Reveal>
             ))}
           </ul>
         </div>
