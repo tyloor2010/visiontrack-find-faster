@@ -51,7 +51,8 @@ export const Punch: React.FC<{
   const { fps } = useVideoConfig();
   const fg = dark ? WHITE : BLACK;
   const bg = dark ? BLACK : WHITE;
-  const words = text.split(" ");
+  // Tokens: a [bracketed phrase] stays one token so it renders as one box.
+  const words = text.match(/\[[^\]]+\]|\S+/g) ?? [];
   return (
     <div
       style={{
