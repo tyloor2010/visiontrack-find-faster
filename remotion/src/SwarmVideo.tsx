@@ -367,7 +367,10 @@ const SB: React.FC = () => {
                 style={{ width: "100%", display: "block", filter: "grayscale(1) contrast(1.15) brightness(0.95)" }}
               />
             </div>
-            <div style={{ position: "absolute", left: 150, bottom: 120 }}>
+            <AbsoluteFill
+              style={{ background: "linear-gradient(0deg, rgba(11,11,11,0.95) 0%, rgba(11,11,11,0.75) 16%, rgba(11,11,11,0) 30%)" }}
+            />
+            <div style={{ position: "absolute", left: 150, bottom: 70 }}>
               <div style={{ fontFamily: sans, fontSize: 54, fontWeight: 500, color: PAPER, letterSpacing: -1.5 }}>{title}</div>
               <div style={{ fontFamily: mono, fontSize: 17, letterSpacing: 2, color: "rgba(255,255,255,0.6)", marginTop: 10 }}>
                 {sub.toUpperCase()}
