@@ -3,6 +3,7 @@ import { UserPlus, Users } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PageShell } from "@/components/app/AppShell";
+import { portraitFor } from "@/components/common/PersonThumb";
 import { DemoTag } from "@/components/common/badges";
 import { EmptyState } from "@/components/common/EmptyState";
 import { Button } from "@/components/ui/button";
@@ -149,8 +150,20 @@ function TeamPage() {
                 {rows.map((m) => (
                   <tr key={m.id} className="border-t border-border">
                     <td className="px-4 py-3">
-                      <span className="font-medium">{m.name}</span>
-                      <span className="block text-xs text-muted-foreground">{m.email}</span>
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={portraitFor(m.id)}
+                          alt=""
+                          loading="lazy"
+                          width={512}
+                          height={640}
+                          className="h-9 w-9 shrink-0 rounded-full border border-border object-cover object-top"
+                        />
+                        <div>
+                          <span className="font-medium">{m.name}</span>
+                          <span className="block text-xs text-muted-foreground">{m.email}</span>
+                        </div>
+                      </div>
                     </td>
                     <td className="px-4 py-3">
                       {manage ? (

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, FolderPlus, ScanSearch } from "lucide-react";
 import { PageShell } from "@/components/app/AppShell";
+import { PersonThumb } from "@/components/common/PersonThumb";
 import { DemoTag, Metric, PriorityBadge, StatusBadge } from "@/components/common/badges";
 import { EmptyState } from "@/components/common/EmptyState";
 import { Button } from "@/components/ui/button";
@@ -97,8 +98,13 @@ function Overview() {
                         </Link>
                       </td>
                       <td className="px-4 py-2.5">
-                        <span className="font-medium">{c.person.fullName}</span>
-                        <span className="block text-xs text-muted-foreground">Age {c.person.age}</span>
+                        <div className="flex items-center gap-3">
+                          <PersonThumb seed={c.id} className="w-9 shrink-0 rounded-sm" />
+                          <div>
+                            <span className="font-medium">{c.person.fullName}</span>
+                            <span className="block text-xs text-muted-foreground">Age {c.person.age}</span>
+                          </div>
+                        </div>
                       </td>
                       <td className="px-4 py-2.5 text-muted-foreground">
                         {c.lastSeenLocation}
