@@ -5,6 +5,7 @@ import {
   interpolate,
   random,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -17,7 +18,7 @@ const mono = loadMono("normal", { weights: ["400"], subsets: ["latin"] }).fontFa
 const INK = "#0b0b0b";
 const PAPER = "#f6f6f4";
 
-export const SWARM_TOTAL = 700;
+export const SWARM_TOTAL = 1114;
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -591,13 +592,22 @@ export const SwarmVideo: React.FC = () => (
     <Sequence from={286} durationInFrames={176}>
       <S5 />
     </Sequence>
-    <Sequence from={462} durationInFrames={74}>
+    <Sequence from={462} durationInFrames={100}>
+      <SA />
+    </Sequence>
+    <Sequence from={562} durationInFrames={240}>
+      <SB />
+    </Sequence>
+    <Sequence from={802} durationInFrames={110}>
+      <SC />
+    </Sequence>
+    <Sequence from={912} durationInFrames={74}>
+      <SD />
+    </Sequence>
+    <Sequence from={986} durationInFrames={74}>
       <S6 />
     </Sequence>
-    <Sequence from={536} durationInFrames={70}>
-      <S7 />
-    </Sequence>
-    <Sequence from={606} durationInFrames={94}>
+    <Sequence from={1060} durationInFrames={54}>
       <S8 />
     </Sequence>
   </AbsoluteFill>
