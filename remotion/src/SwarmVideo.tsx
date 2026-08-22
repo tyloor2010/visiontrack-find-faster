@@ -61,79 +61,124 @@ const Grid: React.FC<{ dark?: boolean; progress: number }> = ({ dark, progress }
   );
 };
 
-/* -------------------------------------------------------------- S1 dot */
+/* ------------------------------------------------------- S1 scan-in */
 
 const S1: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const s = spring({ frame, fps, config: { damping: 14, stiffness: 90 } });
-  const size = interpolate(s, [0, 1], [6, 26]);
-  const breathe = 1 + Math.sin(frame / 8) * 0.06;
-  const out = interpolate(frame, [34, 45], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const sweep = interpolate(frame, [0, 40], [-0.15, 1.15], { extrapolateRight: "clamp" });
+  const gridOp = interpolate(frame, [4, 30], [0, 0.5], { extrapolateRight: "clamp" });
+  const out = interpolate(frame, [36, 46], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const label = "INITIALISING VISUAL SEARCH";
+  const shown = Math.floor(interpolate(frame, [10, 34], [0, label.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   return (
-    <AbsoluteFill style={{ backgroundColor: INK, alignItems: "center", justifyContent: "center" }}>
+    <AbsoluteFill style={{ backgroundColor: INK, opacity: out }}>
+      <AbsoluteFill style={{ opacity: gridOp }}>
+        {new Array(16).fill(0).map((_, i) => (
+          <div key={`v${i}`} style={{ position: "absolute", left: `${(i / 16) * 100}%`, top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.12)" }} />
+        ))}
+        {new Array(9).fill(0).map((_, i) => (
+          <div key={`h${i}`} style={{ position: "absolute", top: `${(i / 9) * 100}%`, left: 0, right: 0, height: 1, background: "rgba(255,255,255,0.12)" }} />
+        ))}
+      </AbsoluteFill>
       <div
         style={{
-          width: size * breathe,
-          height: size * breathe,
-          borderRadius: "50%",
+          position: "absolute",
+          top: `${sweep * 100}%`,
+          left: 0,
+          right: 0,
+          height: 3,
           background: PAPER,
-          opacity: out,
-          boxShadow: `0 0 ${40 * out}px rgba(255,255,255,0.35)`,
+          boxShadow: "0 0 90px rgba(255,255,255,0.8)",
         }}
       />
+      <div
+        style={{
+          position: "absolute",
+          left: 150,
+          bottom: 130,
+          fontFamily: mono,
+          fontSize: 20,
+          letterSpacing: 5,
+          color: "rgba(255,255,255,0.7)",
+        }}
+      >
+        {label.slice(0, shown)}
+        <span style={{ opacity: frame % 16 < 8 ? 1 : 0 }}>_</span>
+      </div>
     </AbsoluteFill>
   );
 };
 
-/* ------------------------------------------------------------ S2 swarm */
+/* ---------------------------------------------------- S2 lock-on grid */
 
-const DOTS = 130;
+const DOTS = 150;
 
 const S2: React.FC = () => {
   const frame = useCurrentFrame();
   const cx = 960;
-  const cy = 540;
+  const cy = 520;
 
-  // 0 -> chaotic cloud, 1 -> spiral rosette
-  const form = interpolate(frame, [10, 70], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const collapse = interpolate(frame, [86, 118], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const spin = frame * 0.6;
+  const form = interpolate(frame, [6, 62], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const lock = interpolate(frame, [70, 96], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const fade = interpolate(frame, [108, 122], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const ring = interpolate(ease(lock), [0, 1], [420, 250]);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: PAPER }}>
+    <AbsoluteFill style={{ backgroundColor: INK, opacity: fade }}>
       <svg width={1920} height={1080}>
         {new Array(DOTS).fill(0).map((_, i) => {
           const a = random(`a${i}`) * Math.PI * 2;
-          const rr = 90 + random(`r${i}`) * 300;
-          const chaosX = cx + Math.cos(a) * rr * 1.4;
+          const rr = 140 + random(`r${i}`) * 520;
+          const chaosX = cx + Math.cos(a) * rr * 1.5;
           const chaosY = cy + Math.sin(a) * rr;
 
-          const golden = i * 2.399963;
-          const rad = 40 + Math.sqrt(i / DOTS) * 300;
-          const tx = cx + Math.cos(golden + spin / 60) * rad;
-          const ty = cy + Math.sin(golden + spin / 60) * rad;
+          // target: concentric scan rings
+          const ringIdx = i % 3;
+          const rad = 130 + ringIdx * 100;
+          const ang = (i / DOTS) * Math.PI * 2 * 3 + frame * 0.012;
+          const tx = cx + Math.cos(ang) * rad;
+          const ty = cy + Math.sin(ang) * rad;
 
-          const p = ease(Math.min(1, Math.max(0, form - (i / DOTS) * 0.25) / 0.75));
-          let x = interpolate(p, [0, 1], [chaosX, tx]);
-          let y = interpolate(p, [0, 1], [chaosY, ty]);
-          // collapse into solid disc
-          x = interpolate(ease(collapse), [0, 1], [x, cx + Math.cos(golden) * rad * 0.55]);
-          y = interpolate(ease(collapse), [0, 1], [y, cy + Math.sin(golden) * rad * 0.55]);
-
-          const r = interpolate(ease(collapse), [0, 1], [2 + random(`s${i}`) * 7, 12]);
-          return <circle key={i} cx={x} cy={y} r={r} fill={INK} />;
+          const p = ease(Math.min(1, Math.max(0, form - (i / DOTS) * 0.3) / 0.7));
+          const x = interpolate(p, [0, 1], [chaosX, tx]);
+          const y = interpolate(p, [0, 1], [chaosY, ty]);
+          const r = interpolate(p, [0, 1], [1.5 + random(`s${i}`) * 4, 2.6]);
+          return <circle key={i} cx={x} cy={y} r={r} fill={PAPER} opacity={0.35 + p * 0.65} />;
         })}
-        <circle
-          cx={cx}
-          cy={cy}
-          r={interpolate(ease(collapse), [0, 1], [180, 250])}
-          fill="none"
-          stroke={INK}
-          strokeWidth={1.5}
-          opacity={collapse}
-        />
+        <circle cx={cx} cy={cy} r={ring} fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth={1.5} opacity={lock} strokeDasharray="14 12" />
+        {[
+          [-1, -1],
+          [1, -1],
+          [-1, 1],
+          [1, 1],
+        ].map(([sx, sy], i) => {
+          const d = interpolate(ease(lock), [0, 1], [420, 300]);
+          const px = cx + sx * d;
+          const py = cy + sy * d * 0.66;
+          return (
+            <g key={i} stroke={PAPER} strokeWidth={3} opacity={lock}>
+              <line x1={px} y1={py} x2={px - sx * 46} y2={py} />
+              <line x1={px} y1={py} x2={px} y2={py - sy * 46} />
+            </g>
+          );
+        })}
       </svg>
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 150,
+          textAlign: "center",
+          fontFamily: mono,
+          fontSize: 19,
+          letterSpacing: 6,
+          color: "rgba(255,255,255,0.75)",
+          opacity: lock,
+        }}
+      >
+        SUBJECT LOCKED · SIMILARITY 0.94
+      </div>
     </AbsoluteFill>
   );
 };
@@ -169,8 +214,8 @@ const S3: React.FC = () => {
   const frame = useCurrentFrame();
   const out = interpolate(frame, [48, 60], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
-    <AbsoluteFill style={{ backgroundColor: PAPER, alignItems: "center", justifyContent: "center", opacity: out }}>
-      <Wordmark text="VisionTrack" />
+    <AbsoluteFill style={{ backgroundColor: INK, alignItems: "center", justifyContent: "center", opacity: out }}>
+      <Wordmark text="VisionTrack" dark />
     </AbsoluteFill>
   );
 };
