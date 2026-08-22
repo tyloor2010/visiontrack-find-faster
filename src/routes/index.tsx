@@ -44,14 +44,6 @@ function Home() {
     <SiteLayout>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-navy text-navy-foreground">
-        <div className="absolute inset-0 grid-blueprint opacity-60" aria-hidden="true" />
-        <div className="vt-aurora absolute inset-0 opacity-40" aria-hidden="true" />
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-          <span className="vt-scan" style={{ animationDelay: "0s" }} />
-          <span className="vt-scan" style={{ animationDelay: "2.5s" }} />
-          <span className="vt-ping left-[12%] top-[22%] h-24 w-24" />
-          <span className="vt-ping right-[18%] bottom-[18%] h-32 w-32" style={{ animationDelay: "1.4s" }} />
-        </div>
         <div className="relative mx-auto grid max-w-7xl gap-12 px-5 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-center">
           <div>
             <Reveal>
@@ -61,7 +53,7 @@ function Home() {
             </Reveal>
             <Reveal delay={120}>
               <h1 className="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                See Further. <span className="vt-shimmer-text">Find Faster.</span>
+                See Further. Find Faster.
               </h1>
             </Reveal>
             <Reveal delay={240}>
@@ -98,9 +90,7 @@ function Home() {
             </dl>
           </div>
           <Reveal delay={200} className="lg:-mr-10">
-            <div className="vt-float">
-              <ProductPreview />
-            </div>
+            <ProductPreview />
           </Reveal>
         </div>
       </section>
