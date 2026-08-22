@@ -113,7 +113,7 @@ function VisualSearch() {
         {/* LEFT — reference */}
         <section className="panel h-fit p-4" aria-labelledby="reference-heading">
           <h2 id="reference-heading" className="text-sm font-semibold">Reference image</h2>
-          <PersonThumb seed={caseId} ratio="portrait" className="mt-3" label={uploadName ? "Uploaded" : "Case reference"} />
+          <PersonThumb seed={caseId} gender={record.person.gender} age={record.person.age} ratio="portrait" className="mt-3" label={uploadName ? "Uploaded" : "Case reference"} />
           <p className="mt-2 truncate text-xs text-muted-foreground">{uploadName ?? `${record.id} — case reference`}</p>
           <Button variant="outline" size="sm" className="mt-3 w-full" onClick={() => fileInput.current?.click()}>
             <ImagePlus className="mr-2 h-4 w-4" /> Upload image
@@ -272,7 +272,7 @@ function VisualSearch() {
                   {results.map((m) => (
                     <li key={m.id} className="p-4">
                       <div className="flex gap-3">
-                        <PersonThumb seed={m.caseId} variant="capture" className="w-20 shrink-0" label={`#${String(m.rank).padStart(2, "0")}`} />
+                        <PersonThumb seed={m.caseId} gender={record.person.gender} age={record.person.age} variant="capture" className="w-20 shrink-0" label={`#${String(m.rank).padStart(2, "0")}`} />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-2">
                             <p className="text-sm font-medium">Potential Match #{String(m.rank).padStart(2, "0")}</p>
@@ -332,7 +332,7 @@ function VisualSearch() {
                 <figure className="overflow-hidden">
                   <div className="overflow-hidden border border-border">
                     <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: "center" }}>
-                      <PersonThumb seed={caseId} label="Reference" ratio="portrait" />
+                      <PersonThumb seed={caseId} gender={record.person.gender} age={record.person.age} label="Reference" ratio="portrait" />
                     </div>
                   </div>
                   <figcaption className="mt-1.5 text-xs text-muted-foreground">Reference — {record.id}</figcaption>
@@ -340,7 +340,7 @@ function VisualSearch() {
                 <figure className="overflow-hidden">
                   <div className="overflow-hidden border border-border">
                     <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: "center" }}>
-                      <PersonThumb seed={compare?.caseId ?? caseId} variant="capture" label="Candidate" ratio="portrait" />
+                      <PersonThumb seed={compare?.caseId ?? caseId} gender={record.person.gender} age={record.person.age} variant="capture" label="Candidate" ratio="portrait" />
                     </div>
                   </div>
                   <figcaption className="mt-1.5 text-xs text-muted-foreground">Potential match — {compare?.source}</figcaption>
@@ -349,10 +349,10 @@ function VisualSearch() {
             ) : (
               <div className="relative overflow-hidden border border-border">
                 <div style={{ transform: `scale(${zoom / 100})` }}>
-                  <PersonThumb seed={caseId} label="Reference" ratio="wide" />
+                  <PersonThumb seed={caseId} gender={record.person.gender} age={record.person.age} label="Reference" ratio="wide" />
                 </div>
                 <div className="absolute inset-0 opacity-50" style={{ transform: `scale(${zoom / 100})` }}>
-                  <PersonThumb seed={compare?.caseId ?? caseId} variant="capture" label="Candidate overlay" ratio="wide" />
+                  <PersonThumb seed={compare?.caseId ?? caseId} gender={record.person.gender} age={record.person.age} variant="capture" label="Candidate overlay" ratio="wide" />
                 </div>
               </div>
             )}

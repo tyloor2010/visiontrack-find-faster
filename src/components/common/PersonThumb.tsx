@@ -16,12 +16,40 @@ import p12 from "@/assets/portraits/p12.jpg";
  * Reference imagery for the sample dataset. Portraits are model-generated
  * stand-ins — they do not depict real people or real cases.
  */
-const PORTRAITS = [p01, p02, p03, p04, p05, p06, p07, p08, p09, p10, p11, p12];
+const PORTRAITS: { src: string; gender: "Female" | "Male"; age: number }[] = [
+  { src: p01, gender: "Female", age: 27 },
+  { src: p02, gender: "Male", age: 40 },
+  { src: p03, gender: "Male", age: 17 },
+  { src: p04, gender: "Female", age: 70 },
+  { src: p05, gender: "Male", age: 22 },
+  { src: p06, gender: "Female", age: 42 },
+  { src: p07, gender: "Female", age: 12 },
+  { src: p08, gender: "Male", age: 65 },
+  { src: p09, gender: "Female", age: 33 },
+  { src: p10, gender: "Male", age: 52 },
+  { src: p11, gender: "Female", age: 24 },
+  { src: p12, gender: "Male", age: 9 },
+];
 
-export function portraitFor(seed: string) {
+function hash(seed: string) {
   let h = 0;
   for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return PORTRAITS[h % PORTRAITS.length]!;
+  return h;
+}
+
+/** Picks a stable stand-in portrait that matches the described gender and age. */
+export function portraitFor(seed: string, gender?: string, age?: number) {
+  let pool = PORTRAITS;
+  if (gender === "Female" || gender === "Male") {
+    const byGender = PORTRAITS.filter((p) => p.gender === gender);
+    if (byGender.length) pool = byGender;
+  }
+  if (typeof age === "number") {
+    const minGap = Math.min(...pool.map((p) => Math.abs(p.age - age)));
+    const close = pool.filter((p) => Math.abs(p.age - age) <= Math.max(minGap, 8));
+    if (close.length) pool = close;
+  }
+  return pool[hash(seed) % pool.length]!.src;
 }
 
 export function PersonThumb({
@@ -30,11 +58,15 @@ export function PersonThumb({
   className,
   ratio = "square",
   variant = "reference",
+  gender,
+  age,
 }: {
   seed: string;
   label?: string;
   className?: string;
   ratio?: "square" | "portrait" | "wide";
+  gender?: string;
+  age?: number;
   /** `capture` renders the frame like a desaturated camera still. */
   variant?: "reference" | "capture";
 }) {
@@ -42,7 +74,7 @@ export function PersonThumb({
   return (
     <div className={cn("relative overflow-hidden border border-border bg-navy", aspect, className)}>
       <img
-        src={portraitFor(seed)}
+        src={portraitFor(seed, gender, age)}
         alt={label ?? "Reference frame"}
         loading="lazy"
         width={512}

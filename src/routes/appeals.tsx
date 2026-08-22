@@ -91,7 +91,7 @@ function AppealsPage() {
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {rows.map((c) => (
             <li key={c.id} className="panel overflow-hidden">
-              <PersonThumb seed={c.id} ratio="portrait" />
+              <PersonThumb seed={c.id} gender={c.person.gender} age={c.person.age} ratio="portrait" />
               <div className="p-4">
                 <h2 className="text-base font-semibold">{c.person.fullName}</h2>
                 <p className="text-xs text-muted-foreground">
