@@ -1,22 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Bell,
   Boxes,
   Compass,
-  FileStack,
-  FileText,
-  FolderKanban,
   Layers,
-  LayoutDashboard,
-  MapPin,
   ScanSearch,
   ShieldCheck,
-  Users,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductPreview } from "@/components/site/ProductPreview";
 import { Reveal } from "@/components/site/Reveal";
+import { ModulesGrid } from "@/components/site/ModulesGrid";
 import { Button } from "@/components/ui/button";
 
 const title = "VisionTrack — See Further. Find Faster.";
