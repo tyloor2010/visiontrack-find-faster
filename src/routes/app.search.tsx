@@ -272,7 +272,7 @@ function VisualSearch() {
                   {results.map((m) => (
                     <li key={m.id} className="p-4">
                       <div className="flex gap-3">
-                        <PersonThumb seed={m.id} className="w-20 shrink-0" label={`#${String(m.rank).padStart(2, "0")}`} />
+                        <PersonThumb seed={m.caseId} variant="capture" className="w-20 shrink-0" label={`#${String(m.rank).padStart(2, "0")}`} />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-2">
                             <p className="text-sm font-medium">Potential Match #{String(m.rank).padStart(2, "0")}</p>
@@ -340,7 +340,7 @@ function VisualSearch() {
                 <figure className="overflow-hidden">
                   <div className="overflow-hidden border border-border">
                     <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: "center" }}>
-                      <PersonThumb seed={compare?.id ?? "m"} label="Candidate" ratio="portrait" />
+                      <PersonThumb seed={compare?.caseId ?? caseId} variant="capture" label="Candidate" ratio="portrait" />
                     </div>
                   </div>
                   <figcaption className="mt-1.5 text-xs text-muted-foreground">Potential match — {compare?.source}</figcaption>
@@ -352,7 +352,7 @@ function VisualSearch() {
                   <PersonThumb seed={caseId} label="Reference" ratio="wide" />
                 </div>
                 <div className="absolute inset-0 opacity-50" style={{ transform: `scale(${zoom / 100})` }}>
-                  <PersonThumb seed={compare?.id ?? "m"} label="Candidate overlay" ratio="wide" />
+                  <PersonThumb seed={compare?.caseId ?? caseId} variant="capture" label="Candidate overlay" ratio="wide" />
                 </div>
               </div>
             )}

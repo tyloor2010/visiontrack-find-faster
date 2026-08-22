@@ -261,7 +261,7 @@ function CaseDetail() {
                 {ms.map((m) => (
                   <li key={m.id} className="panel p-4">
                     <div className="flex gap-3">
-                      <PersonThumb seed={m.id} className="w-20" label={`#${String(m.rank).padStart(2, "0")}`} />
+                      <PersonThumb seed={m.caseId} variant="capture" className="w-20" label={`#${String(m.rank).padStart(2, "0")}`} />
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium">Potential Match #{String(m.rank).padStart(2, "0")}</p>
                         <p className="font-mono text-xs text-muted-foreground">Similarity {m.similarity}%</p>
