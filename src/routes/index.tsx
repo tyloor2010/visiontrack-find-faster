@@ -1,5 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Boxes, Compass, Layers, ScanSearch, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  Bell,
+  Boxes,
+  Compass,
+  FileStack,
+  FileText,
+  FolderKanban,
+  Layers,
+  LayoutDashboard,
+  MapPin,
+  ScanSearch,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductPreview } from "@/components/site/ProductPreview";
 import { Reveal } from "@/components/site/Reveal";
