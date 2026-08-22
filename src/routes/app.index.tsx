@@ -99,7 +99,7 @@ function Overview() {
                       </td>
                       <td className="px-4 py-2.5">
                         <div className="flex items-center gap-3">
-                          <PersonThumb seed={c.id} className="w-9 shrink-0 rounded-sm" />
+                          <PersonThumb seed={c.id} gender={c.person.gender} age={c.person.age} className="w-9 shrink-0 rounded-sm" />
                           <div>
                             <span className="font-medium">{c.person.fullName}</span>
                             <span className="block text-xs text-muted-foreground">Age {c.person.age}</span>

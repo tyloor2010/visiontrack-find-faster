@@ -143,7 +143,7 @@ function CaseDetail() {
     >
       <div className="grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))]">
         <div className="panel flex items-center gap-3 p-4">
-          <PersonThumb seed={record.id} className="w-16" ratio="portrait" label="Reference" />
+          <PersonThumb seed={record.id} gender={record.person.gender} age={record.person.age} className="w-16" ratio="portrait" label="Reference" />
           <div>
             <p className="eyebrow text-muted-foreground">Case</p>
             <p className="font-mono text-sm">{record.id}</p>
@@ -261,7 +261,7 @@ function CaseDetail() {
                 {ms.map((m) => (
                   <li key={m.id} className="panel p-4">
                     <div className="flex gap-3">
-                      <PersonThumb seed={m.caseId} variant="capture" className="w-20" label={`#${String(m.rank).padStart(2, "0")}`} />
+                      <PersonThumb seed={m.caseId} gender={record.person.gender} age={record.person.age} variant="capture" className="w-20" label={`#${String(m.rank).padStart(2, "0")}`} />
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium">Potential Match #{String(m.rank).padStart(2, "0")}</p>
                         <p className="font-mono text-xs text-muted-foreground">Similarity {m.similarity}%</p>
