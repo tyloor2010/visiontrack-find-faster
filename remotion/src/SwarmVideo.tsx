@@ -17,7 +17,7 @@ const mono = loadMono("normal", { weights: ["400"], subsets: ["latin"] }).fontFa
 const INK = "#0b0b0b";
 const PAPER = "#f6f6f4";
 
-export const SWARM_TOTAL = 560;
+export const SWARM_TOTAL = 700;
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
