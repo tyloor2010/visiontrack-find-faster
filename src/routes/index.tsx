@@ -268,30 +268,8 @@ function Home() {
               </Link>
             </Button>
           </div>
-          <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              [LayoutDashboard, "Dashboard", "Active cases, newest candidate matches and team activity in one operational overview."],
-              [FolderKanban, "Case management", "Sortable, filterable case table with status tracking and a guided multi-step intake wizard."],
-              [ScanSearch, "Visual search", "Upload evidence, run identification passes and compare candidates side by side with similarity scores."],
-              [FileStack, "Evidence center", "Central repository with chain-of-custody logging, uploader attribution and file provenance."],
-              [MapPin, "Spatial map", "Geographic view of last-known locations, sighting reports and team deployment radii."],
-              [Bell, "Alerts", "Notification center for new matches, status changes and escalations that need a reviewer."],
-              [FileText, "Reports", "Structured case summaries and activity exports for briefings and handovers."],
-              [Users, "Team", "Role assignment, invitations and per-case membership with scoped permissions."],
-              [ShieldCheck, "Admin console", "Organization management, platform health and access review for administrators."],
-            ].map(([Icon, t, b], i) => {
-              const I = Icon as typeof ScanSearch;
-              return (
-                <Reveal key={t as string} delay={(i % 3) * 110}>
-                  <article className="group h-full bg-card p-7 transition-colors duration-300 hover:bg-surface">
-                    <I className="h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                    <h3 className="mt-5 text-base font-semibold">{t as string}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{b as string}</p>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
+          <ModulesGrid />
+
         </div>
       </section>
 
