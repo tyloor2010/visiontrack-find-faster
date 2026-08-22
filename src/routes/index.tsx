@@ -336,11 +336,11 @@ function Home() {
             Different responsibilities, one shared record.
           </h2>
           <div className="mt-10 grid gap-px border border-border bg-border lg:grid-cols-3">
-            {[
+            {([
               ["Families", "Submit a case, upload reference photographs, follow progress and receive updates without chasing anyone for status.", "/for-families", "Read the family guide"],
               ["Organizations", "NGOs, search teams and authorized units coordinate volunteers, assign reviewers and keep an auditable operational record.", "/for-organizations", "See organization tooling"],
               ["Reviewers", "Trained reviewers work a ranked candidate queue, compare evidence side by side and record an explicit accept or dismiss decision.", "/how-it-works", "See the review workflow"],
-            ].map(([t, b, to, cta], i) => (
+            ] as const).map(([t, b, to, cta], i) => (
               <Reveal key={t} delay={i * 130}>
                 <article className="flex h-full flex-col bg-card p-7">
                   <h3 className="text-lg font-semibold">{t}</h3>
