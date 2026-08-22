@@ -212,6 +212,198 @@ function Home() {
         </div>
       </section>
 
+      {/* Impact metrics */}
+      <section className="border-b border-border bg-navy text-navy-foreground">
+        <div className="mx-auto max-w-7xl px-5 py-16 md:py-20">
+          <p className="eyebrow text-navy-foreground/60">Platform snapshot</p>
+          <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+            Built for the volume real searches generate.
+          </h2>
+          <dl className="mt-10 grid gap-px border border-navy-foreground/10 bg-navy-foreground/10 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["48", "Active case records", "Structured intake, descriptors and contacts per case."],
+              ["1,200+", "Evidence items indexed", "Photos, frames, documents and field notes with versioning."],
+              ["3", "Review roles", "Administrator, Investigator and Reviewer permissions."],
+              ["100%", "Actions audited", "Every upload, search and decision is attributed and timestamped."],
+            ].map(([n, t, b], i) => (
+              <Reveal key={t} delay={i * 110}>
+                <div className="h-full bg-navy p-6">
+                  <dt className="font-mono text-3xl font-semibold text-primary">{n}</dt>
+                  <dd className="mt-3 text-sm font-medium text-navy-foreground/90">{t}</dd>
+                  <dd className="mt-2 text-sm leading-relaxed text-navy-foreground/55">{b}</dd>
+                </div>
+              </Reveal>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* Modules */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-5 py-16 md:py-20">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="eyebrow text-primary">Inside the workspace</p>
+              <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+                Nine modules, one operational record.
+              </h2>
+            </div>
+            <Button asChild variant="outline">
+              <Link to="/app">
+                Open the workspace <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              [LayoutDashboard, "Dashboard", "Active cases, newest candidate matches and team activity in one operational overview."],
+              [FolderKanban, "Case management", "Sortable, filterable case table with status tracking and a guided multi-step intake wizard."],
+              [ScanSearch, "Visual search", "Upload evidence, run identification passes and compare candidates side by side with similarity scores."],
+              [FileStack, "Evidence center", "Central repository with chain-of-custody logging, uploader attribution and file provenance."],
+              [MapPin, "Spatial map", "Geographic view of last-known locations, sighting reports and team deployment radii."],
+              [Bell, "Alerts", "Notification center for new matches, status changes and escalations that need a reviewer."],
+              [FileText, "Reports", "Structured case summaries and activity exports for briefings and handovers."],
+              [Users, "Team", "Role assignment, invitations and per-case membership with scoped permissions."],
+              [ShieldCheck, "Admin console", "Organization management, platform health and access review for administrators."],
+            ].map(([Icon, t, b], i) => {
+              const I = Icon as typeof ScanSearch;
+              return (
+                <Reveal key={t as string} delay={(i % 3) * 110}>
+                  <article className="group h-full bg-card p-7 transition-colors duration-300 hover:bg-surface">
+                    <I className="h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+                    <h3 className="mt-5 text-base font-semibold">{t as string}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{b as string}</p>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* First 48 hours timeline */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:py-20 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <p className="eyebrow text-primary">The first 48 hours</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+              Where time is usually lost — and where it is recovered.
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+              The early window of a search is decisive. VisionTrack structures that window into repeatable steps so a
+              team can hand off between shifts without losing what has already been checked.
+            </p>
+          </div>
+          <ol className="relative border-l border-border pl-6">
+            {[
+              ["H+0", "Intake", "A family member or authorized officer files the case: identity details, descriptors, last-known location and reference imagery."],
+              ["H+1", "Evidence consolidation", "Photos arriving from relatives and CCTV operators are uploaded once, deduplicated and attributed to a source."],
+              ["H+3", "First visual pass", "Candidate frames are ranked against reference imagery. Reviewers triage the queue by confidence."],
+              ["H+6", "Field coordination", "Confirmed areas of interest are pushed to the spatial map with search radii and assigned teams."],
+              ["H+12", "Escalation", "Unresolved high-confidence candidates are escalated to an investigator with a full evidence packet."],
+              ["H+48", "Reporting", "A structured summary documents everything reviewed, dismissed and pending for the next shift or authority."],
+            ].map(([h, t, b], i) => (
+              <Reveal key={h} as="li" delay={i * 90} className="relative pb-8 last:pb-0">
+                <span className="absolute -left-[31px] top-1.5 h-2.5 w-2.5 rounded-full border border-primary bg-background" />
+                <span className="font-mono text-xs text-primary">{h}</span>
+                <h3 className="mt-1.5 font-semibold">{t}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{b}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Roles */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-5 py-16 md:py-20">
+          <p className="eyebrow text-primary">Who uses it</p>
+          <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+            Different responsibilities, one shared record.
+          </h2>
+          <div className="mt-10 grid gap-px border border-border bg-border lg:grid-cols-3">
+            {[
+              ["Families", "Submit a case, upload reference photographs, follow progress and receive updates without chasing anyone for status.", "/for-families", "Read the family guide"],
+              ["Organizations", "NGOs, search teams and authorized units coordinate volunteers, assign reviewers and keep an auditable operational record.", "/for-organizations", "See organization tooling"],
+              ["Reviewers", "Trained reviewers work a ranked candidate queue, compare evidence side by side and record an explicit accept or dismiss decision.", "/how-it-works", "See the review workflow"],
+            ].map(([t, b, to, cta], i) => (
+              <Reveal key={t} delay={i * 130}>
+                <article className="flex h-full flex-col bg-card p-7">
+                  <h3 className="text-lg font-semibold">{t}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{b}</p>
+                  <Link to={to} className="mt-6 inline-flex items-center text-sm font-medium text-primary hover:underline">
+                    {cta} <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                  </Link>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Technology detail */}
+      <section className="border-b border-border bg-card">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:py-20 lg:grid-cols-2">
+          <div>
+            <p className="eyebrow text-primary">Under the hood</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+              Computer vision as a ranking tool, not a verdict.
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+              Reference imagery and submitted evidence are normalized, encoded into comparable representations, and
+              scored against each other. The output is an ordered list with explicit confidence — designed to shorten
+              the queue a human has to look at, not to replace them.
+            </p>
+            <Button asChild variant="outline" className="mt-7">
+              <Link to="/technology">
+                Explore the technology <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <div className="grid gap-px self-start border border-border bg-border sm:grid-cols-2">
+            {[
+              ["Normalization", "Alignment, lighting correction and quality scoring before anything is compared."],
+              ["Representation", "Evidence is encoded into comparable vectors so similarity is measurable, not subjective."],
+              ["Ranking", "Candidates are returned ordered by confidence, with low-quality inputs flagged rather than hidden."],
+              ["Explainability", "Every result shows what was compared, when, and by which pass — visible in the case timeline."],
+            ].map(([t, b], i) => (
+              <Reveal key={t} delay={i * 110} className="bg-card p-6">
+                <h3 className="text-sm font-semibold">{t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{b}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="border-b border-border">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:py-20 lg:grid-cols-[0.75fr_1.25fr]">
+          <div>
+            <p className="eyebrow text-primary">Questions</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">Common questions.</h2>
+            <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+              Something not covered here? <Link to="/contact" className="text-primary hover:underline">Contact the team</Link>.
+            </p>
+          </div>
+          <dl className="grid gap-px border border-border bg-border">
+            {[
+              ["Does VisionTrack confirm a person's identity?", "No. The platform reports visual similarity between authorized evidence items. Confirming identity is always a human decision made by an authorized reviewer, and that decision is recorded."],
+              ["Who can access a case?", "Only named users with an assigned role on that case. Administrators manage membership, and access changes are written to the audit log."],
+              ["What happens to uploaded evidence?", "Each item is stored against a single case with uploader attribution, timestamps and a chain-of-custody entry for every subsequent action."],
+              ["Can families use it directly?", "Families can submit a case and reference imagery, follow progress, and receive updates. Review and field coordination remain with authorized team members."],
+              ["Is this a surveillance system?", "No. It operates only on evidence attached to a registered missing-person case and is not designed to identify people outside an authorized search."],
+            ].map(([q, a], i) => (
+              <Reveal key={q} delay={i * 90} className="bg-card p-6">
+                <dt className="font-semibold">{q}</dt>
+                <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</dd>
+              </Reveal>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+
       {/* CTA */}
       <section className="bg-card">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-5 py-16 md:flex-row md:items-center md:justify-between md:py-20">
