@@ -5,6 +5,7 @@ import { z } from "zod";
 import { PageShell } from "@/components/app/AppShell";
 import { DemoTag, PriorityBadge, StatusBadge } from "@/components/common/badges";
 import { EmptyState } from "@/components/common/EmptyState";
+import { PersonThumb } from "@/components/common/PersonThumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -28,7 +29,7 @@ export const Route = createFileRoute("/app/cases/")({
   component: CasesPage,
 });
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 function CasesPage() {
   const search = Route.useSearch();
@@ -161,10 +162,15 @@ function CasesPage() {
                       </Link>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="font-medium">{c.person.fullName}</span>
-                      <span className="block text-xs text-muted-foreground">
-                        Age {c.person.age} · {c.person.gender}
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <PersonThumb seed={c.id} className="w-9 shrink-0 rounded-sm" />
+                        <div>
+                          <span className="font-medium">{c.person.fullName}</span>
+                          <span className="block text-xs text-muted-foreground">
+                            Age {c.person.age} · {c.person.gender}
+                          </span>
+                        </div>
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">
                       {c.lastSeenLocation}
