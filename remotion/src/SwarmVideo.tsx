@@ -272,7 +272,189 @@ const S5: React.FC = () => {
   );
 };
 
+/* ------------------------------------------------- SA modules grid */
+
+const MODULES: [string, string][] = [
+  ["Dashboard", "active cases, matches, team activity"],
+  ["Case Management", "intake wizard, status tracking"],
+  ["Case Detail", "overview, evidence, timeline, team"],
+  ["Visual Search", "side-by-side candidate comparison"],
+  ["Evidence Center", "chain-of-custody logging"],
+  ["Spatial Map", "case locations, team deployment"],
+  ["Alerts", "sighting reports and escalations"],
+  ["Reports", "structured case summaries"],
+  ["Public Appeals", "searchable published appeals"],
+];
+
+const SA: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  return (
+    <AbsoluteFill style={{ backgroundColor: PAPER, padding: "110px 150px" }}>
+      <Grid progress={interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" })} />
+      <div style={{ fontFamily: mono, fontSize: 18, letterSpacing: 5, color: "rgba(0,0,0,0.45)" }}>
+        INSIDE THE WORKSPACE
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 26, marginTop: 46 }}>
+        {MODULES.map(([t, d], i) => {
+          const s = spring({ frame: frame - 8 - i * 4, fps, config: { damping: 200 } });
+          return (
+            <div
+              key={t}
+              style={{
+                border: `1px solid rgba(0,0,0,${0.15 + s * 0.1})`,
+                padding: "26px 26px 30px",
+                opacity: s,
+                transform: `translateY(${interpolate(s, [0, 1], [26, 0])}px)`,
+                background: "rgba(255,255,255,0.7)",
+              }}
+            >
+              <div style={{ fontFamily: mono, fontSize: 14, color: "rgba(0,0,0,0.4)" }}>
+                {String(i + 1).padStart(2, "0")}
+              </div>
+              <div style={{ fontFamily: sans, fontSize: 32, fontWeight: 500, color: INK, marginTop: 10, letterSpacing: -0.8 }}>
+                {t}
+              </div>
+              <div style={{ fontFamily: sans, fontSize: 18, color: "rgba(0,0,0,0.55)", marginTop: 8 }}>{d}</div>
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/* ------------------------------------------------ SB product screens */
+
+const SHOTS: [string, string, string][] = [
+  ["dashboard.png", "Dashboard", "Active cases, recent matches, team activity"],
+  ["cases.png", "Case Management", "Sortable register with status and priority"],
+  ["search.png", "Visual Search", "Ranked candidates with similarity scores"],
+  ["evidence.png", "Evidence Center", "Every file logged with chain of custody"],
+  ["map.png", "Spatial Map", "Case locations and deployed search teams"],
+];
+
+const SHOT_LEN = 46;
+
+const SB: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  return (
+    <AbsoluteFill style={{ backgroundColor: INK }}>
+      <Grid dark progress={1} />
+      {SHOTS.map(([file, title, sub], i) => {
+        const local = frame - i * SHOT_LEN;
+        if (local < -6 || local > SHOT_LEN + 10) return null;
+        const s = spring({ frame: local, fps, config: { damping: 200 } });
+        const out = interpolate(local, [SHOT_LEN - 6, SHOT_LEN + 8], [1, 0], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        });
+        return (
+          <AbsoluteFill key={file} style={{ opacity: s * out, alignItems: "center", justifyContent: "center" }}>
+            <div
+              style={{
+                width: 1280,
+                border: "1px solid rgba(255,255,255,0.25)",
+                overflow: "hidden",
+                transform: `translateY(${interpolate(s, [0, 1], [50, 0])}px) scale(${interpolate(local, [0, SHOT_LEN + 10], [1.02, 1.07])})`,
+                boxShadow: "0 40px 120px rgba(0,0,0,0.6)",
+              }}
+            >
+              <img
+                src={staticFile(`shots/${file}`)}
+                style={{ width: "100%", display: "block", filter: "grayscale(1) contrast(1.15) brightness(0.95)" }}
+              />
+            </div>
+            <div style={{ position: "absolute", left: 150, bottom: 120 }}>
+              <div style={{ fontFamily: sans, fontSize: 54, fontWeight: 500, color: PAPER, letterSpacing: -1.5 }}>{title}</div>
+              <div style={{ fontFamily: mono, fontSize: 17, letterSpacing: 2, color: "rgba(255,255,255,0.6)", marginTop: 10 }}>
+                {sub.toUpperCase()}
+              </div>
+            </div>
+          </AbsoluteFill>
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+/* ---------------------------------------------------- SC workflow */
+
+const STEPS: [string, string][] = [
+  ["01", "Intake — structured case record in minutes"],
+  ["02", "Evidence — upload, dedupe, timestamp, log"],
+  ["03", "Match — computer vision ranks candidates"],
+  ["04", "Review — a named investigator decides"],
+  ["05", "Report — shareable summary and alerts"],
+];
+
+const SC: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  return (
+    <AbsoluteFill style={{ backgroundColor: PAPER, justifyContent: "center", padding: "0 170px" }}>
+      <div style={{ fontFamily: mono, fontSize: 18, letterSpacing: 5, color: "rgba(0,0,0,0.45)", marginBottom: 34 }}>
+        THE FIRST 48 HOURS
+      </div>
+      {STEPS.map(([n, label], i) => {
+        const s = spring({ frame: frame - 6 - i * 9, fps, config: { damping: 200 } });
+        return (
+          <div
+            key={n}
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 32,
+              padding: "18px 0",
+              borderTop: "1px solid rgba(0,0,0,0.15)",
+              opacity: s,
+              transform: `translateX(${interpolate(s, [0, 1], [-40, 0])}px)`,
+            }}
+          >
+            <span style={{ fontFamily: mono, fontSize: 20, color: "rgba(0,0,0,0.4)" }}>{n}</span>
+            <span style={{ fontFamily: sans, fontSize: 42, fontWeight: 500, color: INK, letterSpacing: -1 }}>{label}</span>
+          </div>
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+/* ------------------------------------------------------ SD numbers */
+
+const STATS: [string, string][] = [
+  ["48", "active cases"],
+  ["1,248", "evidence items indexed"],
+  ["3.2s", "median match run"],
+  ["100%", "actions audit-logged"],
+];
+
+const SD: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  return (
+    <AbsoluteFill style={{ backgroundColor: INK, alignItems: "center", justifyContent: "center" }}>
+      <Grid dark progress={1} />
+      <div style={{ display: "flex", gap: 90 }}>
+        {STATS.map(([v, l], i) => {
+          const s = spring({ frame: frame - i * 7, fps, config: { damping: 200 } });
+          return (
+            <div key={l} style={{ textAlign: "center", opacity: s, transform: `translateY(${interpolate(s, [0, 1], [30, 0])}px)` }}>
+              <div style={{ fontFamily: sans, fontSize: 92, fontWeight: 500, color: PAPER, letterSpacing: -3 }}>{v}</div>
+              <div style={{ fontFamily: mono, fontSize: 16, letterSpacing: 3, color: "rgba(255,255,255,0.55)", marginTop: 8 }}>
+                {l.toUpperCase()}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 /* ---------------------------------------------------------- S6 prompt */
+
 
 const S6: React.FC = () => {
   const frame = useCurrentFrame();
