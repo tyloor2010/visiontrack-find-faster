@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as AppealsRouteImport } from './routes/appeals'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ForFamiliesRouteImport } from './routes/for-families'
 import { Route as ForOrganizationsRouteImport } from './routes/for-organizations'
@@ -51,6 +52,11 @@ const AdminRoute = AdminRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppealsRoute = AppealsRouteImport.update({
+  id: '/appeals',
+  path: '/appeals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
+  '/appeals': typeof AppealsRoute
   '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
@@ -178,6 +185,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/appeals': typeof AppealsRoute
   '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
@@ -204,6 +212,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
+  '/appeals': typeof AppealsRoute
   '/contact': typeof ContactRoute
   '/for-families': typeof ForFamiliesRoute
   '/for-organizations': typeof ForOrganizationsRoute
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/app'
+    | '/appeals'
     | '/contact'
     | '/for-families'
     | '/for-organizations'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
+    | '/appeals'
     | '/contact'
     | '/for-families'
     | '/for-organizations'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/app'
+    | '/appeals'
     | '/contact'
     | '/for-families'
     | '/for-organizations'
@@ -306,6 +318,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
   AppRoute: typeof AppRouteWithChildren
+  AppealsRoute: typeof AppealsRoute
   ContactRoute: typeof ContactRoute
   ForFamiliesRoute: typeof ForFamiliesRoute
   ForOrganizationsRoute: typeof ForOrganizationsRoute
@@ -343,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/appeals': {
+      id: '/appeals'
+      path: '/appeals'
+      fullPath: '/appeals'
+      preLoaderRoute: typeof AppealsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -518,6 +538,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
   AppRoute: AppRouteWithChildren,
+  AppealsRoute: AppealsRoute,
   ContactRoute: ContactRoute,
   ForFamiliesRoute: ForFamiliesRoute,
   ForOrganizationsRoute: ForOrganizationsRoute,
